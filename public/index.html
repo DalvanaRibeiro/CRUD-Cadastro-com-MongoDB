@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- Definição do charset e configuração de viewport para garantir a responsividade da página -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Cadastro - MongoDB</title>
+
+    <!-- Link para a fonte 'Roboto' do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Estilos internos para a página -->
+    <style>
+        /* Reset de Estilos: remove margens e preenchimentos padrão e define a caixa de modelo (box-model) como border-box */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Estilos principais para o corpo da página */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fc; /* Cor de fundo suave */
+            color: #333; /* Cor do texto */
+            padding: 20px; /* Espaçamento interno */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Garante que a página ocupe toda a altura da tela */
+            flex-direction: column; /* Organiza os elementos de forma vertical */
+        }
+
+        /* Título principal */
+        h1 {
+            font-size: 2.5rem;
+            color: #5623e0; /* Cor azul bonita */
+            margin-bottom: 20px;
+        }
+
+        /* Subtítulo de seção */
+        h2 {
+            font-size: 1.8rem;
+            color: #555; /* Cor cinza */
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Estilo do contêiner do formulário */
+        .form-container {
+            width: 100%;
+            max-width: 500px; /* Limita a largura do formulário */
+            background-color: #fff; /* Cor de fundo branca */
+            padding: 20px;
+            border-radius: 8px; /* Bordas arredondadas */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil para destacar o formulário */
+            margin-bottom: 40px;
+        }
+
+        /* Estilo dos campos de entrada do formulário */
+        .form-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ccc; /* Borda cinza claro */
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none; /* Remove o contorno padrão ao focar no campo */
+            transition: border-color 0.3s ease; /* Transição suave da cor da borda */
+        }
+
+        /* Estilo do campo quando ele está em foco (ativado) */
+        .form-container input:focus {
+            border-color: #4CAF50; /* Borda verde ao focar */
+        }
+
+        /* Estilo do botão de envio */
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1d6adc; /* Cor de fundo  */
+            border: none;
+            border-radius: 5px;
+            color: #fff; /* Texto branco */
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Efeito de hover no botão */
+        .form-container button:hover {
+            background-color: #45a049; /* Verde mais escuro ao passar o mouse */
+        }
+
+        /* Estilo da tabela que exibe os itens */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        /* Estilo das células da tabela */
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd; /* Borda sutil */
+        }
+
+        /* Cabeçalhos da tabela */
+        table th {
+            background-color: #f2f2f2; /* Fundo claro para cabeçalhos */
+            color: #333;
+        }
+
+        /* Linhas de dados da tabela */
+        table td {
+            background-color: #fff;
+        }
+
+        /* Estilo do botão de ação na tabela (excluir) */
+        table button {
+            padding: 6px 12px;
+            background-color: #f44336; /* Cor vermelha para o botão de exclusão */
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Efeito de hover no botão de ação */
+        table button:hover {
+            background-color: #d32f2f; /* Vermelho mais escuro ao passar o mouse */
+        }
+
+        /* Estilo para o contêiner de botões de ação */
+        .action-buttons {
+            display: flex;
+            gap: 10px; /* Espaçamento entre os botões */
+        }
+
+        /* Responsividade para telas pequenas */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px; /* Ajusta o preenchimento para telas menores */
+            }
+
+            table {
+                font-size: 0.9rem; /* Diminui o tamanho da fonte da tabela */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>CRUD de Cadastro de Produtos da Loja dos Talentos - MongoDB</h1>
+
+    <!-- Formulário para criação de novos itens -->
+    <div class="form-container">
+        <h2>Criar Item</h2>
+        <form id="createForm">
+            <input type="text" id="name" placeholder="Nome do Item" required>
+            <input type="text" id="description" placeholder="Descrição do Item" required>
+            <button type="submit">Adicionar Item</button>
+        </form>
+    </div>
+
+    <!-- Tabela para exibir os itens cadastrados -->
+    <h2>Itens Cadastrados</h2>
+    <table id="itemsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Os itens serão inseridos aqui via JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Link para o arquivo de script (JavaScript) -->
+    <script src="script.js"></script>
+</body>
+</html>
